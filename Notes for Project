@@ -1,3 +1,43 @@
 This will be my direct notes for the project. It will outline current features and new ideas coming to the project.
 
 Imports:
+
+from langchain_core.messages import HumanMessage #langchain is high level framework which allows me to build AI apps
+from langchain_openai import ChatOpenAI
+from langchain.tools import tool
+from langgraph.prebuilt import create_react_agent #langgraph is high level framework which allows me to build AI agents
+from tools import get_bloomberg_news,get_investing_news,get_medium_finance_articles,get_crypto_price,get_financial_news
+from tools import analyze_financial_content, get_fx_stats, predict_crypto_trends,get_predictive_price,get_price_analysis, predict_market_move #imports the tools necessary to get financial data
+from langchain_core.messages import SystemMessage
+from langchain.chains import LLMChain
+from langchain.prompts import PromptTemplate
+from dotenv import load_dotenv
+
+These imports allow me to pull from the OpenAI repositories and use their functionality for the AI's capabilities. The tools pull from various data sets.
+
+Currently the bot has two modes, 'General' and 'Financial', they are experts in what they do, the general bot acts like any other AI, however, the financial mode uses the tools built in tools.py to pull data and report on it.
+I have added functionality to be able to switch between each bot here: 
+
+MODE_CONFIGS = {
+    "general": {
+        "tools": [],
+        "system_prompt": SystemMessage(content="You're a helpful general-purpose assistant.")
+    },
+    "financial": {
+        "tools": [
+            get_crypto_price,
+            get_financial_news,
+            get_bloomberg_news,
+            get_investing_news,
+            get_medium_finance_articles,
+            analyze_financial_content,
+            predict_market_move,
+            get_fx_stats,
+            predict_crypto_trends,
+            get_predictive_price,
+            get_price_analysis
+        ],
+        "system_prompt": SystemMessage(content="You are a financial analyst AI. Use financial tools and news sources to answer questions.")
+         }
+
+The future steps I would like is to add the ability for this bot to use machine learning and give me statistical analysis on the data and predict future data, such as pricing in markets.
